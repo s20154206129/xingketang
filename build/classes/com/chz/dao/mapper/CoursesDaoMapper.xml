@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chz.dao.CoursesDao">
+   
+     <resultMap type="Courses" id="courseResult">
+		<id property="id" column="id"   javaType="int" jdbcType="INTEGER"/>
+		<result property="coursename" column="coursename" />
+		<result property="coursedesc" column="coursedesc" />
+		<result property="courseimg" column="courseimg" />
+		<result property="coureAuthority" column="coureAuthority" />
+		<result property="starttime" column="starttime" jdbcType="TIMESTAMP" javaType="java.sql.Timestamp"/>
+		<result property="couretime" column="couretime" />
+		<result property="studynum" column="studynum" />
+		<!-- level -->
+		<result property="level" column="level" />
+		<!-- association  id 是本表的外键-->
+		<association property="courseGrade2"    column="secondid"   select="com.chz.dao.CourseGrade2Dao.getCourseGrade2ById">
+	    </association>
+	    <association property="teacher"    column="tid"   select="com.chz.dao.UserDao.getTeacherById">
+	    </association>
+	 </resultMap>
+
+
+      <!-- 查找 相应数据的课程 -->
+      <select id="findCourseInformation"       resultMap="courseResult">
+		  select   *   from   td_course     limit #{currentPage},#{pageSize}
+	  </select>
+	  
+	  
+	  <!-- findCourseById -->
+	  <select id="findCourseById"       resultMap="courseResult">
+		  select   *   from   td_course     where  id=#{courseId}
+	  </select>
+	   
+	   
+	   
+	   <!-- getLastId 获得最新的id-->
+	    <select id="getLastId"      resultType="Integer">
+		   select   id   from   td_course   order by  id  DESC   limit 1
+	    </select>
+	  
+	  <!-- saveCourse  增加课程 -->
+	  <insert id="saveCourse">
+		insert into
+		td_course(coursename,coursedesc,courseimg,coureAuthority,starttime,couretime,level,tid,secondid)
+		values(#{coures.coursename},#{coures.coursedesc},#{coures.courseimg},
+		#{coures.coureAuthority},#{coures.starttime},
+		#{coures.couretime},#{coures.level},#{coures.teacher.id},#{coures.courseGrade2.id})
+	 </insert>
+	  <!--findCourseByImg  -->
+	  <select id="findCourseByImg"       resultMap="courseResult">
+		    select   *   from   td_course   where  courseimg=#{courseimg}  
+	  </select>
+	  
+	  
+	  
+	  <!--findCoursePageList  -->
+	  <select id="findCoursePageList"       resultMap="courseResult">
+		      select   *   from   td_course     limit #{currentPage},#{pageSize}
+	  </select>
+	  
+	  
+	  <!-- getCount -->
+	  <select id="getCount"   resultType="Integer">
+		    select   count(*)   from   td_course  
+	  </select>
+	  
+	  
+	  
+	  <!--delete  -->
+	  <delete id="delete">
+	       delete from  td_course     where  id=#{courseId}
+	  </delete>
+	  
+	  
+	  <!--  update-->
+	  <update id="update">
+	       update   td_course  set coureAuthority =#{authority}  where id=#{courseId}
+	  </update>
+	  
+	  <!-- findCourseByTid -->
+	  <select id="findCourseByTid"       resultMap="courseResult">
+		   select   *   from   td_course    where   tid=#{tid}
+	  </select>
+	  
+</mapper>

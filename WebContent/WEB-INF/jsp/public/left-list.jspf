@@ -1,0 +1,25 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<ul class="list-group" id="left-list-nav">
+	<c:choose>
+		<c:when test="${user.role   eq   0}">
+		   <a  href="userInformaction.action?role=${user.role}&&id=${user.id}" class="list-group-item"> 个人基本信息 </a>
+		   <a  class="list-group-item"> 我的收藏 </a>
+		</c:when>
+		<c:when test="${user.role   eq   1}">
+		   <a href="userInformaction.action?role=${user.role}&&id=${user.id}"  class="list-group-item ">个人基本信息 </a>
+		   <a href="vedio/goUpload.action" class="list-group-item">创建课程</a>
+		   <a href="vedio/myEsblishCourse.action" class="list-group-item">我的开设课程</a>
+		   <a href="vedio/setupCourse.action" class="list-group-item">设置课程目录</a>
+		   <a href="vedio/uploadVedio.action" class="list-group-item">视频上传</a>
+		   <a class="list-group-item"> 我的收藏 </a>
+		</c:when>
+		<c:otherwise>
+			<a  href="userInformaction.action?role=${user.role}&&id=${user.id}" class="list-group-item">个人基本信息 </a>
+			<a  class="list-group-item">消息管理 </a>
+			<a   href="course/manage.action?currentPage=1" class="list-group-item">课程管理 </a>
+			<a  class="list-group-item">我的收藏 </a>
+			<a  class="list-group-item">分类管理</a>
+			<a  class="list-group-item">用户管理</a>
+		</c:otherwise>
+	</c:choose>
+</ul>

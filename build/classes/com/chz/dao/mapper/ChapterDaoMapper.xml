@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chz.dao.ChapterDao">
+       <resultMap type="Chapter" id="chapterResult">
+        <id property="cid" column="cid"   />
+	    <id property="zid" column="zid" />
+		<result property="zContent" column="zContent" />
+		<!-- 关联查询传入多值，column当map使用   右边为外键 vlaue  -->
+		<collection  property="sectionList"  ofType="Section" column="{coureId=cid,zzid=zid}"   select="com.chz.dao.SectionDao.getSecionById">
+	    </collection> 
+      </resultMap>
+      <!-- findChapterById  查询所有章 -->
+       <select id="findChapterById"       resultMap="chapterResult">
+		  select   *   from   td_zvedio     
+		  where   cid=#{courseId}
+	   </select>
+      <!--   saveChapter    -->
+      <insert id="saveChapter" >
+		insert into   td_zvedio(cid,zid,zContent)
+		values(#{courseId},#{charpter},#{chapterContent})
+	 </insert>
+	 
+	 <!-- findChapterZidById -->
+     <select id="findChapterZidById"      resultType="Integer">
+		   select   zid   from   td_zvedio     where cid=#{cid}    order by  zid    DESC   limit 1
+	 </select>
+       
+</mapper>

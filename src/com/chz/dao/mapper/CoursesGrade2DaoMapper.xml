@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chz.dao.CourseGrade2Dao">
+        <resultMap type="CourseGrade2" id="course2Result">
+		<id property="id" column="id"   javaType="int" jdbcType="INTEGER"/>
+		<result property="name" column="name" />
+		<!--  courseGrade-->
+		<association property="courseGrade"    column="firstid"   select="com.chz.dao.courseGrade.getCourseGradeById" >
+	    </association>
+	    </resultMap>  
+        <!--  根据id 查找第二级别 -->
+        <select id="getCourseGrade2ById"   parameterType="Integer"     resultMap="course2Result">
+		  select   *   from   td_course_grade2   where  
+		  id=#{secondid} 
+	    </select>
+
+</mapper>

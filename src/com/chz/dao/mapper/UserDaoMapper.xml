@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chz.dao.UserDao">
+	 <resultMap type="User" id="userResult">
+		<id property="id" column="id"   javaType="int" jdbcType="INTEGER"/>
+		<result property="userName" column="userName" />
+		<result property="password" column="password" />
+		<result property="role" column="role" />
+	 </resultMap>
+	
+	<!--注册  -->
+	<insert id="saveUser"   >
+		insert into
+	    td_user(userName,password,role)
+		values(#{user.userName},#{user.password},#{user.role})
+	</insert>
+	
+	<!-- 登录 -->
+	<select id="findUser"   resultMap="userResult">
+		select   * from td_user where  
+		userName=#{userName}   and    password=#{password}
+	</select>
+	
+	<!-- 用户名唯一 -->
+	<select id="checkUserByName"   resultMap="userResult">
+		select   *   from   td_user   where  
+		userName=#{userName} 
+	</select>
+	
+</mapper>

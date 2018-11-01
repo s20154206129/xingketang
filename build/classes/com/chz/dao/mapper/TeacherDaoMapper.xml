@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chz.dao.UserDao">
+	<resultMap type="Teacher" id="teacherResult">
+		<id property="id" column="id" javaType="int" jdbcType="INTEGER" />
+		<result property="teacherDesc" column="teacherDesc" />
+		<result property="tname" column="tname" />
+		<result property="teacherimg" column="teacherimg" />
+		<result property="sex" column="sex" />
+		<result property="educationLevel" column="educationLevel" />
+		<result property="birthday" column="birthday" />
+		<result property="email" column="email" />
+		<result property="organization" column="organization" />
+	</resultMap>
+
+	<!-- getTeacherById tid 是一对一映射 过来的 -->
+	<select id="getTeacherById" parameterType="Integer" resultMap="teacherResult">
+		select * from td_teacher where
+		id=#{tid}
+	</select>
+	<!-- findTeacherByName -->
+	<select id="findTeacherByName" resultMap="teacherResult">
+		select * from td_teacher where
+		tname=#{tname}
+	</select>
+
+
+	<!-- addTeacher -->
+	<insert id="addTeacher">
+		insert into
+		td_teacher(id,teacherDesc,tname,teacherimg,sex,educationLevel,birthday,email,organization)
+		values(#{t.id},#{t.teacherDesc},#{t.tname},#{t.teacherimg},#{t.sex},#{t.educationLevel},#{t.birthday}
+		,#{t.email},#{t.organization})
+	</insert>
+
+ 
+     <!-- addUserInformationId  注册用户的同时向 用户详细表插入一条数据 -->
+      <insert id="addUserInformationId">
+		insert into   td_teacher(id)   values(#{id})
+	  </insert>
+
+
+	<!-- updateTeacher -->
+	<update id="updateTeacher">
+		update td_teacher set
+		teacherDesc=#{t.teacherDesc}
+		, tname=#{t.tname},
+		<if test="t.teacherimg!=null">
+		teacherimg=#{t.teacherimg},
+		</if>
+		sex=#{t.sex}
+		, educationLevel=#{t.educationLevel}
+		, birthday=#{t.birthday}
+		, email=#{t.email}
+		, organization=#{t.organization}
+        where  id=#{t.id}
+	</update>
+
+    <!-- getLastId 获得最新的id-->
+	<select id="getLastId"      resultType="Integer">
+		   select    id  from   td_user   order by  id  DESC   limit 1
+	</select>
+     
+    
+</mapper>

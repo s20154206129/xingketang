@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chz.dao.SectionDao">
+      <resultMap type="Section" id="sectionResult">
+        <id property="cid" column="cid"   />
+	    <id property="zid" column="zid"   />
+		<id property="sid" column="sid"  />
+		<result property="sectionContent" column="sectionContent" />
+		<result property="videoaddress" column="videoaddress" />
+      </resultMap>
+     
+     <!--  getSecionById   组合外键    paramType  一定要 为Map -->
+      <select id="getSecionById"    parameterType="java.util.Map"    resultMap="sectionResult">
+		  select   *   from   td_sectionvedio    
+		  where   cid=#{coureId}  and   zid=#{zzid}   order by  sid
+	 </select>
+     
+     
+     
+     
+     <!--findAllSectionById  -->
+     <select id="findAllSectionById"       resultMap="sectionResult">
+		  select   *   from   td_sectionvedio     
+		  where   cid=#{courseId}
+	 </select>
+	 
+	 <!-- saveChapterSection -->
+	   <insert id="saveChapterSection">
+		insert  into  td_sectionvedio(cid,zid,sid,sectionContent)
+		values(#{courseId},#{charpter},#{sid},#{sectionContent})
+	 </insert>
+
+
+     <!-- insertVideoId -->
+     <update id="insertVideoId">
+         update  td_sectionvedio  set  videoaddress=#{videoId}
+         where  cid=#{cid} and zid=#{zid} and sid=#{sid}
+     </update>
+     
+     
+     
+     <!--findChapterAddress  -->
+      <select id="findChapterAddress"  resultType="String">
+		  select   videoaddress   from   td_sectionvedio     
+		  where   cid=#{cid}  and zid=#{zid}  and sid=#{sid}
+	 </select>
+</mapper>

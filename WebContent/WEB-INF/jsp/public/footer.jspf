@@ -1,0 +1,85 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<div class="bottom-box">
+	<p>@新课堂</p>
+</div>
+
+<!--
+        登录模块  login-box
+       在哪登录   登录之后  就在哪个页面
+-->
+<div id="login-box">
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			用户登录<i class="glyphicon glyphicon-remove" onclick="closeNode(this)"></i>
+		</div>
+		<div class="panel-body">
+			<!--  login.action 规定了 以action为后缀-->
+			<form action="login.action" id="login-form" method="post">
+				<div class="form-group">
+					<label for="exampleInputEmail1">用户名</label> <input type="text"
+						name="user.userName" class="form-control" id="exampleInputEmail1"
+						placeholder="用户名">
+				</div>
+				<div class="form-group">
+					<label for="exampleInputPassword1">密码</label> <input
+						name="user.password" type="password" class="form-control"
+						id="exampleInputPassword1" placeholder="密码">
+				</div>
+				<button type="submit" class="btn btn-primary btn-block">登录</button>
+				<span class="span" id="err">${msg}</span> <span class="span" id="ts"></span>
+				<div class="form-group">
+					<br />
+					<p class="text-right">
+						<a href="#">忘记密码?</a>
+					</p>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+<!--
+	注册模块 register-box     多种角色注册  0普通 用户  1 教师   2管理员 （内定）
+	-->
+<div id="register-box">
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			用户注册<i class="glyphicon glyphicon-remove" onclick="closeNode(this)"></i>
+		</div>
+		<div class="panel-body">
+			<!-- -->
+			<form action="register.action" id="register-form" method="post">
+				<div class="form-group">
+					<label for="exampleInputEmail2">用户名</label> <input type="text"
+						name="user.userName" onblur="deleteUsernameSpan()"
+						class="form-control" id="userName" placeholder="用户名">
+				</div>
+				<span class="span" id="usernameSpan"></span>
+				<div class="form-group">
+					<label for="exampleInputPassword2">密码</label> <input
+						name="user.password" type="password" class="form-control"
+						id="password" placeholder="密码">
+				</div>
+				<span class="span" id="passwordSpan"></span>
+				<div class="form-group">
+					<label for="exampleInputRePassword2">确认密码</label> <input
+						name="userRePassword" type="password" class="form-control"
+						id="rePassword" placeholder="确认密码">
+				</div>
+                <span class="span" id="repasswordSpan"></span>
+                
+				<div class="form-group">
+					 <input  id="on"    name="user.role" type="radio"  value="0" checked="checked"  />普通用户
+                     <input  id="unon"  name="user.role" type="radio"  value="1"    />教师
+				</div>
+           		
+				<button type="submit" class="btn btn-primary btn-block">注册</button>
+				<div class="form-group">
+					<label for="registerInfo">${registerInfo}</label>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script src="js/index.js" type="text/javascript" charset="utf-8"></script>
